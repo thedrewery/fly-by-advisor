@@ -1,13 +1,14 @@
-@import './base.css';
+/* @import './base.css';
 
 #app {
+  background-color: grey;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
 
   font-weight: normal;
-}
-
+}  */
+/*
 a,
 .green {
   text-decoration: none;
@@ -26,10 +27,12 @@ a,
     display: flex;
     place-items: center;
   }
-
-  #app {
+}
+*/
+  /* #app {
+    background-color: grey;
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
-  }
-}
+    background-color: rgb(60, 60, 60);
+  } */
