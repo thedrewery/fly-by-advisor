@@ -1,85 +1,70 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
+  <div class="app">
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div class="header">
+    <img class="logo" src="src/assets/flyadvisorlogo2.png" width="125" height="125" />
+    <h1>Fly By Advisor</h1>
+    <h2>Track flights in real time</h2>
+    <p>{{ flightInfo.response.length }}</p>
+    <p>{{ flightInfo.response }}</p>
     </div>
   </header>
+  <body>
 
-  <RouterView />
+  </body>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+<script>
+import process from "dotenv";
+const API_KEY = process.env.VUE_APP_API_KEY;
+export default {
+  data() {
+    return {
+      flightInfo: {},
+    }
+  }, 
+  created() {
+    this.getFlightInfo()
+  },
+  methods: {
+    async getFlightInfo() {
+      try {
+      const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${API_KEY}&bbox=34.037416,-118.377254,34.089575,-118.309595`)
+        const data = await response.json()
+        this.flightInfo = data
+        } catch(error) {
+          console.log(error)
+        }
+    }
+      }
   }
+</script>
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital@1&display=swap');
+.header img {
+  float: left;
+  width: 200px;
+  height: 200px;
 }
+
+.header h1 {
+  font-family: 'Prompt', sans-serif;
+  position: relative;
+  top: 3px;
+  left: 10px;
+  bottom: 5px;
+  font-size: 80px;
+}
+
+.header h2 {
+  color: cream;
+  font-family: 'Prompt', sans-serif;
+  position: relative;
+  top: -50px;
+  left: 10px;
+  font-size: 40px;
+}
+
 </style>
