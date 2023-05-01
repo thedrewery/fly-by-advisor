@@ -5,8 +5,13 @@
     <img class="logo" src="src/assets/flyadvisorlogo2.png" width="125" height="125" />
     <h1>Fly By Advisor</h1>
     <h2>Track flights in real time</h2>
-    <p>{{ flightInfo.response.length }}</p>
-    <p>{{ flightInfo.response }}</p>
+    <FlightSearch @searchFlights="getFlightInfo" />
+    <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
+    <ul v-if="flightInfo.response">
+          <li v-for="flight in flightInfo.response" :key="flight.flight_iata">
+            {{ flight.flight_iata }} - {{ flight.arr_iata }} - {{ flight.lat }}, {{ flight.lng }}
+          </li>
+        </ul>
     </div>
   </header>
   <body>
@@ -16,9 +21,13 @@
 </template>
 
 <script>
-import process from "dotenv";
-const API_KEY = process.env.VUE_APP_API_KEY;
+import FlightSearch from "./components/FlightSearch.vue";
+const apiKey = import.meta.env.VITE_APP_API_KEY;
+
 export default {
+  components: {
+    FlightSearch,
+  },
   data() {
     return {
       flightInfo: {},
@@ -28,9 +37,9 @@ export default {
     this.getFlightInfo()
   },
   methods: {
-    async getFlightInfo() {
+    async getFlightInfo(NWLL, SELL) {
       try {
-      const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${API_KEY}&bbox=34.037416,-118.377254,34.089575,-118.309595`)
+      const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${apiKey}&bbox=${NWLL},${SELL}`)
         const data = await response.json()
         this.flightInfo = data
         } catch(error) {
