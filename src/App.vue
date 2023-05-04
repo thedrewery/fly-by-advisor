@@ -9,7 +9,7 @@
     <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
     <ul v-if="flightInfo.response">
           <li v-for="flight in flightInfo.response" :key="flight.flight_iata">
-            {{ flight.flight_iata }} - {{ flight.arr_iata }} - {{ flight.lat }}, {{ flight.lng }}
+          Airline:{{ getAirlineName(flight.airline_iata)}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }}
           </li>
         </ul>
     </div>
@@ -22,6 +22,7 @@
 
 <script>
 import FlightSearch from "./components/FlightSearch.vue";
+import iataDictionary from "./iataDictionary"
 const apiKey = import.meta.env.VITE_APP_API_KEY;
 
 export default {
@@ -45,6 +46,9 @@ export default {
         } catch(error) {
           console.log(error)
         }
+    },
+    getAirlineName(airlineIata) {
+      return iataDictionary[airlineIata];
     }
       }
   }
