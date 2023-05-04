@@ -27,5 +27,21 @@ export default {
 </script>
 
 <style>
+form {
+  display: flex;
+  justify-content: space-around;
+}
+
+input {
+  width: 200px;
+}
+
+
+button {
+  font-family: 'Prompt', sans-serif;
+  background: #AC3032;
+  color: white;
+  border-radius: 5px;
+}
 
 </style>
