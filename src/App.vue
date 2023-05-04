@@ -1,22 +1,24 @@
 <template>
   <div class="app">
-  <header>
-    <div class="header">
-    <img class="logo" src="src/assets/flyadvisorlogo2.png" width="125" height="125" />
-    <h1>Fly By Advisor</h1>
-    <h2>Track flights in real time</h2>
-    <FlightSearch @searchFlights="getFlightInfo" />
-    <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
-    <ul v-if="flightInfo.response">
+    <header>
+      <div class="header">
+        <img class="logo" src="src/assets/flyadvisorlogo2.png" width="125" height="125" />
+        <h1>Fly By Advisor</h1>
+        <h2>Track flights in real time</h2>
+      </div>
+    </header>
+    <body>
+      <div class="body">
+        <h2>Enter coordinates to find flights in your area</h2>
+        <FlightSearch @searchFlights="getFlightInfo" />
+        <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
+        <ul v-if="flightInfo.response">
           <li v-for="flight in flightInfo.response" :key="flight.flight_iata">
-          Airline:{{ getAirlineName(flight.airline_iata)}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }}
+            Airline:{{ getAirlineName(flight.airline_iata)}} - Flight Number:{{flight.flight_number}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }}
           </li>
         </ul>
-    </div>
-  </header>
-  <body>
-
-  </body>
+      </div>
+    </body>
   </div>
 </template>
 
@@ -79,5 +81,11 @@ export default {
   left: 10px;
   font-size: 40px;
 }
+
+.body {
+  font-family: 'Prompt', sans-serif;
+  display: block;
+}
+
 
 </style>
