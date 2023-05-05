@@ -50,7 +50,11 @@ export default {
         }
     },
     getAirlineName(airlineIata) {
-      return iataDictionary[airlineIata];
+      if (iataDictionary[airlineIata]) {
+        return iataDictionary[airlineIata];
+      } else {
+        return airlineIata;
+      }
     }
       }
   }
