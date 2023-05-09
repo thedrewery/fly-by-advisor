@@ -17,6 +17,7 @@
             Airline:{{ getAirlineName(flight.airline_iata)}} - Flight Number:{{flight.flight_number}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }}
           </li>
         </ul>
+        <p v-if="isLoading">Loading flights...</p>
       </div>
     </body>
   </div>
@@ -34,6 +35,7 @@ export default {
   data() {
     return {
       flightInfo: {},
+      isLoading: true,
     }
   }, 
   created() {
@@ -47,6 +49,8 @@ export default {
         this.flightInfo = data
         } catch(error) {
           console.log(error)
+        } finally {
+        this.isLoading = false;
         }
     },
     getAirlineName(airlineIata) {
