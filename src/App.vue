@@ -9,6 +9,7 @@
     </header>
     <body>
       <div class="body">
+        <FlightMap />
         <h2>Enter coordinates to find flights in your area</h2>
         <FlightSearch @searchFlights="getFlightInfo" />
         <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
@@ -25,12 +26,14 @@
 
 <script>
 import FlightSearch from "./components/FlightSearch.vue";
+import FlightMap from "./components/FlightMap.vue"
 import iataDictionary from "./iataDictionary"
 const apiKey = import.meta.env.VITE_APP_API_KEY;
 
 export default {
   components: {
     FlightSearch,
+    FlightMap
   },
   data() {
     return {
