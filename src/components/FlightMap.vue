@@ -8,11 +8,11 @@
 
 <script>
 import { defineComponent } from "vue";
-import { GoogleMap, Marker, CustomMarker } from "vue3-google-map";
+import { GoogleMap, CustomMarker } from "vue3-google-map";
 
 
 export default defineComponent({
-  components: { GoogleMap, Marker, CustomMarker },
+  components: { GoogleMap, CustomMarker },
   setup() {
     const mapsApiKey = import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY;
     const center = { lat: 34.049247, lng: -118.054502 };
