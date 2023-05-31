@@ -2,7 +2,7 @@
   <div class="app">
     <header>
       <div class="header">
-        <img class="logo" src="src/assets/flyadvisorlogo2.png" width="125" height="125" />
+        <img class="logo" src="public/flyadvisorlogo2.png" width="125" height="125" />
         <h1>Fly By Advisor</h1>
         <h2>Track flights in real time</h2>
       </div>
