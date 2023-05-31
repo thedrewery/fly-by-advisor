@@ -9,13 +9,13 @@
     </header>
     <body>
       <div class="body">
-        <FlightMap v-if="isFlightInfoLoaded" :flights="flightInfo.response"/>
+        <FlightMap v-if="isFlightInfoLoaded" :flights="searchedFlights"/>
         <h2>Enter coordinates to find flights in your area</h2>
         <FlightSearch @searchFlights="getFlightInfo" />
         <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
         <ul v-if="flightInfo.response">
           <li v-for="flight in flightInfo.response" :key="flight.flight_iata">
-            Airline:{{ getAirlineName(flight.airline_iata)}} - Flight Number:{{flight.flight_number}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }}
+            Airline:{{ getAirlineName(flight.airline_iata)}} - Flight #:{{flight.flight_number}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }} - ICAO#:{{ flight.flight_icao }}
           </li>
         </ul>
         <p v-if="isLoading">Loading flights...</p>
@@ -40,6 +40,7 @@ export default {
       flightInfo: {},
       isLoading: true,
       isFlightInfoLoaded: false,
+      searchedFlights: [],
     }
   }, 
   created() {
@@ -52,9 +53,11 @@ export default {
         const data = await response.json()
         this.flightInfo = data
         if ((this.flightInfo.response).length > 500) {
-          (this.flightInfo.response).splice(500)
+          this.searchedFlights = (this.flightInfo.response).slice(0, 500)
+        } else {
+          this.searchedFlights = this.flightInfo.response
         }
-        //console.log("this is the flightInfo", (this.flightInfo))
+        console.log("these are searched flights", this.searchedFlights)
         } catch(error) {
           console.log(error)
         } finally {
