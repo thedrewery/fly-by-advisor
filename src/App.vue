@@ -9,7 +9,7 @@
     </header>
     <body>
       <div class="body">
-        <FlightMap />
+        <FlightMap v-if="isFlightInfoLoaded" :flights="flightInfo.response"/>
         <h2>Enter coordinates to find flights in your area</h2>
         <FlightSearch @searchFlights="getFlightInfo" />
         <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
@@ -39,6 +39,7 @@ export default {
     return {
       flightInfo: {},
       isLoading: true,
+      isFlightInfoLoaded: false,
     }
   }, 
   created() {
@@ -50,10 +51,15 @@ export default {
       const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${apiKey}&bbox=${NWLL},${SELL}`)
         const data = await response.json()
         this.flightInfo = data
+        if ((this.flightInfo.response).length > 500) {
+          (this.flightInfo.response).splice(500)
+        }
+        //console.log("this is the flightInfo", (this.flightInfo))
         } catch(error) {
           console.log(error)
         } finally {
         this.isLoading = false;
+        this.isFlightInfoLoaded = true;
         }
     },
     getAirlineName(airlineIata) {
