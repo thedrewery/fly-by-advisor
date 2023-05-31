@@ -23,7 +23,7 @@ export default defineComponent({
       return {
         position: { lat: flight.lat, lng: flight.lng},
         label: flight.flight_icao,
-        icon: "/public/airplaneIconSmall.png"
+        icon: "/airplaneIconSmall.png"
       }
     }
     return { mapsApiKey, center, getMarkerOptions };
