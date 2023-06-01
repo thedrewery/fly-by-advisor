@@ -2,14 +2,14 @@
   <div class="app">
     <header>
       <div class="header">
-        <img class="logo" src="/public/flyadvisorlogo2.png" width="125" height="125" />
+        <img class="logo" src="/flyadvisorlogo2.png" width="125" height="125" />
         <h1>Fly By Advisor</h1>
         <h2>Track flights in real time</h2>
       </div>
     </header>
     <body>
       <div class="body">
-        <FlightMap v-if="isFlightInfoLoaded" :flights="searchedFlights"/>
+        <FlightMap v-if="isFlightInfoLoaded" :flights="searchedFlights" :searchedCenter="searchedCenter"/>
         <h2>Enter coordinates to find flights in your area</h2>
         <FlightSearch @searchFlights="getFlightInfo" />
         <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
@@ -41,6 +41,7 @@ export default {
       isLoading: true,
       isFlightInfoLoaded: false,
       searchedFlights: [],
+      searchedCenter: { lat: 34.05, lng: -118.05 },
     }
   }, 
   created() {
@@ -57,7 +58,17 @@ export default {
         } else {
           this.searchedFlights = this.flightInfo.response
         }
-        console.log("these are searched flights", this.searchedFlights)
+        if ((NWLL) && (SELL)) {
+          let [northwestLat, northwestLng] = NWLL.split(" ")
+          northwestLat = parseFloat(northwestLat.substring(0, northwestLat.length - 1))
+
+          let [southeastLat, southeastLng] = SELL.split(" ")
+          southeastLat = parseFloat(southeastLat.substring(0, southeastLat.length - 1));
+
+          this.searchedCenter.lat = (northwestLat + southeastLat) / 2,
+          this.searchedCenter.lng = (parseFloat(northwestLng) + parseFloat(southeastLng)) / 2
+        }
+        console.log("this is the searchedCenter", this.searchedCenter)
         } catch(error) {
           console.log(error)
         } finally {

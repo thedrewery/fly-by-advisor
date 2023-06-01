@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch, computed } from "vue";
 import { GoogleMap, Marker } from "vue3-google-map";
 
 
@@ -15,10 +15,27 @@ export default defineComponent({
     flights: {
       type: Array
     },
+    searchedCenter: {
+      type: Object,
+      default: () => ({ lat: 34.05, lng: -118.05 })
+    },
   },
-  setup() {
+  setup(props) {
     const mapsApiKey = import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY;
-    const center = { lat: 34.049247, lng: -118.054502 };
+    const searchedCenterRef = ref(props.searchedCenter)
+
+    watch(
+      () => props.searchedCenter,
+      (newVal) => {
+        Object.assign(searchedCenterRef.value, newVal);
+      }
+    );
+
+    const center = computed(() => ({
+      lat: searchedCenterRef.value.lat,
+      lng: searchedCenterRef.value.lng
+    }));
+    console.log("this is FlightMap center", center)
     const getMarkerOptions = (flight) => {
       return {
         position: { lat: flight.lat, lng: flight.lng},
