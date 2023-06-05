@@ -56,7 +56,7 @@ export default {
     this.getFlightInfo()
   },
   methods: {
-    async getFlightInfo(NWLL, SELL) {
+    async getFlightInfo(NWLL, SELL, LL) {
       try {
       const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${apiKey}&bbox=${NWLL},${SELL}`)
         const data = await response.json()
@@ -67,16 +67,10 @@ export default {
           this.searchedFlights = this.flightInfo.response
         }
         if ((NWLL) && (SELL)) {
-          let [northwestLat, northwestLng] = NWLL.split(" ")
-          northwestLat = parseFloat(northwestLat.substring(0, northwestLat.length - 1))
-
-          let [southeastLat, southeastLng] = SELL.split(" ")
-          southeastLat = parseFloat(southeastLat.substring(0, southeastLat.length - 1));
-
-          this.searchedCenter.lat = (northwestLat + southeastLat) / 2,
-          this.searchedCenter.lng = (parseFloat(northwestLng) + parseFloat(southeastLng)) / 2
+          let [lat, lng] = LL.split(" ")
+          this.searchedCenter.lat = parseFloat(lat);
+          this.searchedCenter.lng = parseFloat(lng);
         }
-        console.log("this is the searchedCenter", this.searchedCenter)
         } catch(error) {
           console.log(error)
         } finally {
