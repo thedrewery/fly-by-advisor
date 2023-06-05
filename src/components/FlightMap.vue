@@ -10,7 +10,8 @@ import { GoogleMap, Marker } from "vue3-google-map";
 
 
 export default defineComponent({
-  components: { GoogleMap, Marker },
+  // eslint-disable-next-line
+  components: { GoogleMap, Marker }, //eslint ignore
   props: {
     flights: {
       type: Array

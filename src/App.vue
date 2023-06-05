@@ -15,7 +15,15 @@
         <p v-if="flightInfo.response">{{ flightInfo.response.length }} flights found</p>
         <ul v-if="flightInfo.response">
           <li v-for="flight in flightInfo.response" :key="flight.flight_iata">
-            Airline:{{ getAirlineName(flight.airline_iata)}} - Flight #:{{flight.flight_number}} - Status:{{ flight.status }} - Altitude:{{ flight.alt }}m - Speed:{{ flight.speed }}km/hr - Location:{{ flight.lat }}, {{ flight.lng }} - ICAO#:{{ flight.flight_icao }}
+            Airline:{{ getAirlineName(flight.airline_iata)}} 
+            - Flight#:{{flight.flight_number}} 
+            - Status:{{ flight.status }} 
+            - Altitude:{{ flight.alt }}m 
+            - Speed:{{ flight.speed }}km/hr 
+            - Location:{{ flight.lat }}, {{ flight.lng }} 
+            - ICAO#:{{ flight.flight_icao }} 
+            - Departed:{{ flight.dep_iata }}
+            - Arriving:{{ flight.arr_iata }}
           </li>
         </ul>
         <p v-if="isLoading">Loading flights...</p>
