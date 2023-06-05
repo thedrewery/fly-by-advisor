@@ -1,10 +1,8 @@
 <template>
   <div class="flight-search">
     <form @submit.prevent="submitForm">
-      <label for="NWLL">North-West Longitude and Latitude:</label>
-      <input type="text" id="NWLL" v-model="NWLL" required>
-      <label for="SWLL">South-West Longitude and Latitude:</label>
-      <input type="text" id="SWLL" v-model="SWLL" required>
+      <label for="LL">Latitude, Longitude:</label>
+      <input type="text" id="LL" v-model="LL" required>
       <button type="submit">Search Flights</button>
     </form>
   </div>
@@ -14,13 +12,20 @@
 export default {
   data() {
     return {
+      LL: "",
       NWLL: "",
-      SWLL: "",
+      SELL: "",
     };
   },
   methods: {
     submitForm() {
-      this.$emit("searchFlights", this.NWLL, this.SWLL);
+      const [lat, lng] = this.LL.split(" ");
+      const parsedLat = parseFloat(lat);
+      const parsedLng = parseFloat(lng);
+      this.NWLL = `${(parsedLat + 0.1)}, ${parsedLng - 0.1}`;
+      this.SELL = `${(parsedLat - 0.1)}, ${parsedLng + 0.1}`;
+      console.log("NWLL", this.NWLL, "SELL", this.SELL, "LL", this.LL);
+      this.$emit("searchFlights", this.NWLL, this.SELL, this.LL);
     },
   },
 };
