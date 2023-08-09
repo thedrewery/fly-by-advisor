@@ -62,7 +62,7 @@ export default {
       const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${apiKey}&bbox=${NWLL},${SELL}`)
         const data = await response.json()
         this.flightInfo = data
-        console.log(data)
+        //console.log(data)
         if ((this.flightInfo.response).length > 500) {
           this.searchedFlights = (this.flightInfo.response).slice(0, 500)
         } else {
