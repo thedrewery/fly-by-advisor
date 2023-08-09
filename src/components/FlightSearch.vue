@@ -24,7 +24,7 @@ export default {
       const parsedLng = parseFloat(lng);
       this.NWLL = `${(parsedLat + 0.05)}, ${parsedLng - 0.05}`;
       this.SELL = `${(parsedLat - 0.05)}, ${parsedLng + 0.05}`;
-      console.log("NWLL", this.NWLL, "SELL", this.SELL, "LL", this.LL);
+      //console.log("NWLL", this.NWLL, "SELL", this.SELL, "LL", this.LL);
       this.$emit("searchFlights", this.NWLL, this.SELL, this.LL);
     },
   },
