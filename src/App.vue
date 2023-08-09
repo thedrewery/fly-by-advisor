@@ -24,6 +24,7 @@
             - ICAO#:{{ flight.flight_icao }} 
             - Departed:{{ flight.dep_iata }}
             - Arriving:{{ flight.arr_iata }}
+            - Updated:{{ formatTimestamp(flight.updated) }}
           </li>
         </ul>
         <p v-if="isLoading">Loading flights...</p>
@@ -61,6 +62,7 @@ export default {
       const response = await fetch(`https://airlabs.co/api/v9/flights?api_key=${apiKey}&bbox=${NWLL},${SELL}`)
         const data = await response.json()
         this.flightInfo = data
+        console.log(data)
         if ((this.flightInfo.response).length > 500) {
           this.searchedFlights = (this.flightInfo.response).slice(0, 500)
         } else {
@@ -84,7 +86,19 @@ export default {
       } else {
         return airlineIata;
       }
+    },
+    formatTimestamp(timestamp) {
+    const date = new Date(timestamp * 1000); // Convert to milliseconds
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    if (date >= today) {
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else {
+      return date.toLocaleString(); // Adjust the formatting as needed
     }
+  },
       }
   }
 </script>
@@ -118,6 +132,7 @@ export default {
 .body {
   font-family: 'Prompt', sans-serif;
   display: block;
+  font-size: 12px;
 }
 
 
